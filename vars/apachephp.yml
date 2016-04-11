@@ -12,6 +12,7 @@ php_fpm_pm_max_spare_servers: 5
 apache_remove_default_vhost: true
 apache_mods_enabled:
   - proxy_fcgi.load
+  - proxy.load
 apache_global_vhost_settings: |
   ProxyPassMatch ^/(.*\.php)$ fcgi://127.0.0.1:9000/var/www/$1
   DirectoryIndex /index.php index.php
