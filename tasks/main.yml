@@ -1,0 +1,25 @@
+---
+- hosts: meta-role_mysql
+  sudo: true
+  vars_files:
+    - ../vars/mysql.yml
+  roles:
+    - role: geerlingguy.mysql
+      become: yes
+
+- hosts: meta-role_apachephp
+  sudo: true
+  vars_files:
+    - ../vars/apachephp.yml
+  roles:
+    - role: geerlingguy.apache
+    - role: geerlingguy.php
+    - role: geerlingguy.php-mysql
+    - role: larsfronius.phpinfo
+
+- hosts: meta-role_haproxy
+  sudo: true
+  vars_files:
+    - ../vars/haproxy.yml
+  roles:
+    - role: geerlingguy.haproxy

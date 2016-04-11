@@ -1,0 +1,10 @@
+mysql_enabled_on_startup: yes
+mysql_databases:
+  - name: lamp_db
+    encoding: utf8mb4
+    collation: utf8mb4_bin
+mysql_users:
+  - name: lamp
+    host: "%"
+    password: insecuredefault
+    priv: "lamp_db.*:ALL"

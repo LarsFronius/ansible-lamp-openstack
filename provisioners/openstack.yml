@@ -1,0 +1,77 @@
+---
+
+- name: setup lamp servers
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+  - name: create webserver sg
+    os_security_group:
+      name: webserver sg
+
+  - name: create mysql sg
+    os_security_group:
+      name: mysql sg
+
+  - name: create haproxy sg
+    os_security_group:
+      name: haproxy sg
+
+  - name: launch the webserver
+    os_server:
+      state: present
+      auth:
+        username: probe1
+        password: 34767+8@2866
+        project_name: probe1-os-1285
+      name: webserver{{item}}
+      image: eff3a16d-717d-4be6-b5c8-aa262c7f88e1
+      key_name: "lfronius macbook pro"
+      timeout: 200
+      flavor: m1.small
+      nics:
+        - net-id: b5224bfb-5622-4c62-9e79-08b56dc287a2
+      security_groups:
+        - internet access
+      meta:
+        role: apachephp
+    with_sequence: count=2
+
+  - name: launch the db
+    os_server:
+      state: present
+      auth:
+        username: probe1
+        password: 34767+8@2866
+        project_name: probe1-os-1285
+      name: mysql
+      image: eff3a16d-717d-4be6-b5c8-aa262c7f88e1
+      key_name: "lfronius macbook pro"
+      timeout: 200
+      flavor: m1.small
+      nics:
+        - net-id: b5224bfb-5622-4c62-9e79-08b56dc287a2
+      security_groups:
+        - internet access
+      meta:
+        role: mysql
+
+  - name: launch the load balancer
+    os_server:
+      state: present
+      auth:
+        username: probe1
+        password: 34767+8@2866
+        project_name: probe1-os-1285
+      name: haproxy
+      image: eff3a16d-717d-4be6-b5c8-aa262c7f88e1
+      key_name: "lfronius macbook pro"
+      timeout: 200
+      flavor: m1.small
+      nics:
+        - net-id: b5224bfb-5622-4c62-9e79-08b56dc287a2
+      security_groups:
+        - internet access
+      meta:
+        role: haproxy

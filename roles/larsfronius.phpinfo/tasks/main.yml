@@ -1,0 +1,1 @@
+- template: src=templates/phpinfo.php.j2 dest=/var/www/index.php owner=nobody mode=0644

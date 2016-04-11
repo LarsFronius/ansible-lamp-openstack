@@ -1,0 +1,7 @@
+<?php
+{% for host in groups['meta-role_mysql'] %}
+$server='{{ hostvars[host]['ansible_eth0']['ipv4']['address'] }}:3306'
+{% endfor %}
+echo mysql_connect($server, "lamp", "insecuredefault");
+echo gethostname();
+phpinfo();
